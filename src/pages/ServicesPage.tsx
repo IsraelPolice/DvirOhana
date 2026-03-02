@@ -9,6 +9,7 @@ export default function ServicesPage() {
   const [selectedServices, setSelectedServices] = useState<Set<string>>(new Set())
   const [searchTerm, setSearchTerm] = useState('')
   const [selectAll, setSelectAll] = useState(false)
+  const [showCategories, setShowCategories] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -77,7 +78,8 @@ export default function ServicesPage() {
     <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(to bottom, #f7fafc, #edf2f7)',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      paddingBottom: selectedServices.size > 0 ? '80px' : '0'
     }}>
       <header style={{
         background: 'white',
@@ -89,31 +91,34 @@ export default function ServicesPage() {
         <div style={{
           maxWidth: '1400px',
           margin: '0 auto',
-          padding: '1.25rem 1.5rem',
+          padding: '1rem 1rem',
           display: 'flex',
           justifyContent: 'space-between',
-          alignItems: 'center'
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '0.5rem'
         }}>
           <h1 style={{
-            fontSize: '1.75rem',
+            fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
             fontWeight: '700',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             margin: 0
           }}>
-            בחר שירותים
+            מערכת רישום לשירותים
           </h1>
           <button
             onClick={handleLogout}
             style={{
-              padding: '0.5rem 1.5rem',
+              padding: '0.5rem 1rem',
               background: '#e53e3e',
               color: 'white',
               border: 'none',
               borderRadius: '8px',
               cursor: 'pointer',
-              fontWeight: '600'
+              fontWeight: '600',
+              fontSize: '0.9rem'
             }}
           >
             התנתק
@@ -124,13 +129,13 @@ export default function ServicesPage() {
       <main style={{
         maxWidth: '1400px',
         margin: '0 auto',
-        padding: '2rem 1.5rem'
+        padding: '1rem'
       }}>
         <div style={{
           background: 'white',
           borderRadius: '12px',
-          padding: '1.5rem',
-          marginBottom: '1.5rem',
+          padding: '1rem',
+          marginBottom: '1rem',
           boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
         }}>
           <input
@@ -151,86 +156,169 @@ export default function ServicesPage() {
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '280px 1fr',
-          gap: '1.5rem',
+          gridTemplateColumns: window.innerWidth > 768 ? '280px 1fr' : '1fr',
+          gap: '1rem',
           alignItems: 'start'
         }}>
-          <aside style={{
-            background: 'white',
-            borderRadius: '12px',
-            padding: '1.5rem',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-            position: 'sticky',
-            top: '100px'
-          }}>
-            <h2 style={{
-              fontSize: '1.25rem',
-              fontWeight: '700',
-              marginBottom: '1rem',
-              color: '#2d3748'
+          {window.innerWidth > 768 ? (
+            <aside style={{
+              background: 'white',
+              borderRadius: '12px',
+              padding: '1.5rem',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+              position: 'sticky',
+              top: '100px'
             }}>
-              קטגוריות
-            </h2>
-            <button
-              onClick={() => setSelectedCategory(null)}
-              style={{
-                width: '100%',
-                padding: '0.75rem',
-                background: !selectedCategory ? '#667eea' : 'transparent',
-                color: !selectedCategory ? 'white' : '#4a5568',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontWeight: '600',
-                marginBottom: '0.5rem',
-                textAlign: 'right',
-                transition: 'all 0.2s'
-              }}
-            >
-              הכל ({services.length})
-            </button>
-            {categories.map(cat => {
-              const count = services.filter(s => s.category_id === cat.id).length
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    background: selectedCategory === cat.id ? '#667eea' : 'transparent',
-                    color: selectedCategory === cat.id ? 'white' : '#4a5568',
-                    border: 'none',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontWeight: '600',
-                    marginBottom: '0.5rem',
-                    textAlign: 'right',
-                    transition: 'all 0.2s'
-                  }}
-                >
-                  {cat.icon} {cat.name} ({count})
-                </button>
-              )
-            })}
-          </aside>
+              <h2 style={{
+                fontSize: '1.25rem',
+                fontWeight: '700',
+                marginBottom: '1rem',
+                color: '#2d3748'
+              }}>
+                קטגוריות
+              </h2>
+              <button
+                onClick={() => setSelectedCategory(null)}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  background: !selectedCategory ? '#1e40af' : 'transparent',
+                  color: !selectedCategory ? 'white' : '#4a5568',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  marginBottom: '0.5rem',
+                  textAlign: 'right',
+                  transition: 'all 0.2s'
+                }}
+              >
+                הכל ({services.length})
+              </button>
+              {categories.map(cat => {
+                const count = services.filter(s => s.category_id === cat.id).length
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      background: selectedCategory === cat.id ? '#1e40af' : 'transparent',
+                      color: selectedCategory === cat.id ? 'white' : '#4a5568',
+                      border: 'none',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      fontWeight: '600',
+                      marginBottom: '0.5rem',
+                      textAlign: 'right',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    {cat.icon} {cat.name} ({count})
+                  </button>
+                )
+              })}
+            </aside>
+          ) : (
+            <div style={{
+              background: 'white',
+              borderRadius: '12px',
+              padding: '1rem',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+              marginBottom: '1rem'
+            }}>
+              <button
+                onClick={() => setShowCategories(!showCategories)}
+                style={{
+                  width: '100%',
+                  padding: '0.875rem',
+                  background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                  fontSize: '1rem',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}
+              >
+                <span>{selectedCategory ? categories.find(c => c.id === selectedCategory)?.name : 'כל הקטגוריות'}</span>
+                <span>{showCategories ? '▲' : '▼'}</span>
+              </button>
+              {showCategories && (
+                <div style={{ marginTop: '0.5rem' }}>
+                  <button
+                    onClick={() => {
+                      setSelectedCategory(null)
+                      setShowCategories(false)
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      background: !selectedCategory ? '#1e40af' : '#f7fafc',
+                      color: !selectedCategory ? 'white' : '#4a5568',
+                      border: 'none',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      fontWeight: '600',
+                      marginBottom: '0.5rem',
+                      textAlign: 'right'
+                    }}
+                  >
+                    הכל ({services.length})
+                  </button>
+                  {categories.map(cat => {
+                    const count = services.filter(s => s.category_id === cat.id).length
+                    return (
+                      <button
+                        key={cat.id}
+                        onClick={() => {
+                          setSelectedCategory(cat.id)
+                          setShowCategories(false)
+                        }}
+                        style={{
+                          width: '100%',
+                          padding: '0.75rem',
+                          background: selectedCategory === cat.id ? '#1e40af' : '#f7fafc',
+                          color: selectedCategory === cat.id ? 'white' : '#4a5568',
+                          border: 'none',
+                          borderRadius: '8px',
+                          cursor: 'pointer',
+                          fontWeight: '600',
+                          marginBottom: '0.5rem',
+                          textAlign: 'right'
+                        }}
+                      >
+                        {cat.icon} {cat.name} ({count})
+                      </button>
+                    )
+                  })}
+                </div>
+              )}
+            </div>
+          )}
 
           <div>
             <div style={{
               background: 'white',
               borderRadius: '12px',
-              padding: '1.5rem',
-              marginBottom: '1.5rem',
+              padding: '1rem',
+              marginBottom: '1rem',
               boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
               display: 'flex',
+              flexDirection: window.innerWidth > 640 ? 'row' : 'column',
               justifyContent: 'space-between',
-              alignItems: 'center'
+              alignItems: window.innerWidth > 640 ? 'center' : 'stretch',
+              gap: '1rem'
             }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '700', color: '#2d3748' }}>
+                <h3 style={{ margin: 0, fontSize: 'clamp(1rem, 3vw, 1.25rem)', fontWeight: '700', color: '#2d3748' }}>
                   {filteredServices.length} שירותים זמינים
                 </h3>
-                <p style={{ margin: '0.25rem 0 0 0', color: '#718096' }}>
+                <p style={{ margin: '0.25rem 0 0 0', color: '#718096', fontSize: '0.9rem' }}>
                   נבחרו: {selectedServices.size} שירותים
                 </p>
               </div>
@@ -243,7 +331,8 @@ export default function ServicesPage() {
                   border: 'none',
                   borderRadius: '8px',
                   cursor: 'pointer',
-                  fontWeight: '600'
+                  fontWeight: '600',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {selectAll ? 'בטל הכל' : 'בחר הכל'}
@@ -252,7 +341,7 @@ export default function ServicesPage() {
 
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
               gap: '1rem'
             }}>
               {filteredServices.map(service => (
@@ -262,22 +351,12 @@ export default function ServicesPage() {
                   style={{
                     background: 'white',
                     borderRadius: '12px',
-                    padding: '1.25rem',
+                    padding: '1rem',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                     cursor: 'pointer',
-                    border: selectedServices.has(service.id) ? '3px solid #667eea' : '3px solid transparent',
+                    border: selectedServices.has(service.id) ? '3px solid #1e40af' : '3px solid transparent',
                     transition: 'all 0.2s',
                     position: 'relative'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!selectedServices.has(service.id)) {
-                      e.currentTarget.style.borderColor = '#cbd5e0'
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!selectedServices.has(service.id)) {
-                      e.currentTarget.style.borderColor = 'transparent'
-                    }
                   }}
                 >
                   {selectedServices.has(service.id) && (
@@ -287,29 +366,31 @@ export default function ServicesPage() {
                       left: '0.75rem',
                       width: '24px',
                       height: '24px',
-                      background: '#667eea',
+                      background: '#1e40af',
                       borderRadius: '50%',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       color: 'white',
-                      fontWeight: 'bold'
+                      fontWeight: 'bold',
+                      fontSize: '0.85rem'
                     }}>
                       ✓
                     </div>
                   )}
                   <h4 style={{
                     margin: '0 0 0.5rem 0',
-                    fontSize: '1.1rem',
+                    fontSize: '1rem',
                     fontWeight: '700',
-                    color: '#2d3748'
+                    color: '#2d3748',
+                    paddingLeft: '2rem'
                   }}>
                     {service.name}
                   </h4>
                   {service.description && (
                     <p style={{
                       margin: 0,
-                      fontSize: '0.9rem',
+                      fontSize: '0.85rem',
                       color: '#718096',
                       lineHeight: '1.5'
                     }}>
@@ -321,42 +402,44 @@ export default function ServicesPage() {
             </div>
           </div>
         </div>
-
-        {selectedServices.size > 0 && (
-          <div style={{
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            background: 'white',
-            boxShadow: '0 -4px 12px rgba(0,0,0,0.15)',
-            padding: '1.25rem',
-            display: 'flex',
-            justifyContent: 'center',
-            zIndex: 50
-          }}>
-            <button
-              onClick={handleContinue}
-              style={{
-                padding: '1rem 3rem',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '12px',
-                fontSize: '1.2rem',
-                fontWeight: '700',
-                cursor: 'pointer',
-                boxShadow: '0 4px 14px rgba(102, 126, 234, 0.4)',
-                transition: 'transform 0.2s'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-            >
-              המשך עם {selectedServices.size} שירותים
-            </button>
-          </div>
-        )}
       </main>
+
+      {selectedServices.size > 0 && (
+        <div style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          background: 'white',
+          boxShadow: '0 -4px 12px rgba(0,0,0,0.15)',
+          padding: '1rem',
+          display: 'flex',
+          justifyContent: 'center',
+          zIndex: 50
+        }}>
+          <button
+            onClick={handleContinue}
+            style={{
+              padding: 'clamp(0.875rem, 2vw, 1rem) clamp(2rem, 5vw, 3rem)',
+              background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '12px',
+              fontSize: 'clamp(1rem, 2.5vw, 1.2rem)',
+              fontWeight: '700',
+              cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(102, 126, 234, 0.4)',
+              transition: 'transform 0.2s',
+              maxWidth: '500px',
+              width: '100%'
+            }}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+          >
+            המשך עם {selectedServices.size} שירותים
+          </button>
+        </div>
+      )}
     </div>
   )
 }

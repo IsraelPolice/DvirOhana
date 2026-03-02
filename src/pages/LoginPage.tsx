@@ -23,35 +23,53 @@ export default function LoginPage() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
+      background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
+      fontFamily: 'system-ui, -apple-system, sans-serif',
+      padding: '1rem'
     }}>
       <div style={{
         background: 'white',
-        padding: '3rem',
-        borderRadius: '16px',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+        padding: 'clamp(2rem, 5vw, 3rem)',
+        borderRadius: '20px',
+        boxShadow: '0 25px 70px rgba(0,0,0,0.35)',
         width: '100%',
-        maxWidth: '420px',
-        margin: '1rem'
+        maxWidth: '450px',
+        border: '1px solid rgba(255,255,255,0.2)'
       }}>
-        <h1 style={{
-          fontSize: '2rem',
-          fontWeight: '700',
-          marginBottom: '0.5rem',
-          color: '#1a202c',
-          textAlign: 'center'
-        }}>
-          ברוכים הבאים
-        </h1>
-        <p style={{
-          color: '#718096',
+        <div style={{
+          textAlign: 'center',
           marginBottom: '2rem',
-          textAlign: 'center'
+          paddingBottom: '2rem',
+          borderBottom: '2px solid #f0f0f0'
         }}>
-          התחברו כדי להתחיל
-        </p>
-
+          <div style={{
+            width: '60px',
+            height: '60px',
+            background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
+            borderRadius: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto 1rem',
+            fontSize: '1.75rem'
+          }}>
+            🔐
+          </div>
+          <h1 style={{
+            fontSize: 'clamp(1.75rem, 4vw, 2rem)',
+            fontWeight: '700',
+            marginBottom: '0.5rem',
+            color: '#1a202c'
+          }}>
+            מערכת רישום לשירותים
+          </h1>
+          <p style={{
+            color: '#718096',
+            fontSize: '0.95rem'
+          }}>
+            כניסה למערכת
+          </p>
+        </div>
         <form onSubmit={handleLogin}>
           <div style={{ marginBottom: '1.5rem' }}>
             <label style={{
@@ -113,24 +131,25 @@ export default function LoginPage() {
             type="submit"
             style={{
               width: '100%',
-              padding: '0.875rem',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              padding: '1rem',
+              background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
               color: 'white',
               border: 'none',
-              borderRadius: '8px',
+              borderRadius: '12px',
               fontSize: '1.05rem',
-              fontWeight: '600',
+              fontWeight: '700',
               cursor: 'pointer',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              boxShadow: '0 4px 14px rgba(102, 126, 234, 0.4)'
+              transition: 'all 0.2s',
+              boxShadow: '0 6px 20px rgba(30, 64, 175, 0.35)',
+              letterSpacing: '0.3px'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)'
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.5)'
+              e.currentTarget.style.boxShadow = '0 8px 30px rgba(30, 64, 175, 0.5)'
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)'
-              e.currentTarget.style.boxShadow = '0 4px 14px rgba(102, 126, 234, 0.4)'
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(30, 64, 175, 0.35)'
             }}
           >
             התחבר

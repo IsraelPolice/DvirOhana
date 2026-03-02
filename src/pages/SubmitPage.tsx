@@ -52,17 +52,18 @@ export default function SubmitPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
         fontFamily: 'system-ui, -apple-system, sans-serif'
       }}>
         <div style={{
           background: 'white',
-          padding: '3rem',
+          padding: 'clamp(2rem, 5vw, 3rem)',
           borderRadius: '16px',
           boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
           textAlign: 'center',
           maxWidth: '500px',
-          margin: '1rem'
+          margin: '1rem',
+          width: '100%'
         }}>
           <div style={{
             fontSize: '4rem',
@@ -71,7 +72,7 @@ export default function SubmitPage() {
             ✅
           </div>
           <h2 style={{
-            fontSize: '2rem',
+            fontSize: 'clamp(1.5rem, 4vw, 2rem)',
             fontWeight: '700',
             color: '#2d3748',
             marginBottom: '1rem'
@@ -103,7 +104,8 @@ export default function SubmitPage() {
       <div style={{
         maxWidth: '600px',
         margin: '0 auto',
-        padding: '0 1.5rem'
+        padding: '0 1rem',
+        width: '100%'
       }}>
         <div style={{
           background: 'white',
@@ -112,12 +114,12 @@ export default function SubmitPage() {
           overflow: 'hidden'
         }}>
           <div style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
             padding: '2rem',
             textAlign: 'center'
           }}>
             <h1 style={{
-              fontSize: '2rem',
+              fontSize: 'clamp(1.5rem, 4vw, 2rem)',
               fontWeight: '700',
               color: 'white',
               margin: 0
@@ -133,7 +135,7 @@ export default function SubmitPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} style={{ padding: '2.5rem' }}>
+          <form onSubmit={handleSubmit} style={{ padding: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
             <div style={{ marginBottom: '1.5rem' }}>
               <label style={{
                 display: 'block',
@@ -241,7 +243,7 @@ export default function SubmitPage() {
                 style={{
                   flex: 2,
                   padding: '1rem',
-                  background: isSubmitting ? '#a0aec0' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  background: isSubmitting ? '#a0aec0' : 'linear-gradient(135deg, #1e40af 0%, #7c3aed 100%)',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
